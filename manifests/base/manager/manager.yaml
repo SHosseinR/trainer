@@ -19,6 +19,8 @@ spec:
         app.kubernetes.io/name: trainer
         app.kubernetes.io/component: manager
         app.kubernetes.io/part-of: kubeflow
+      annotations:
+        sidecar.istio.io/inject: "false"
     spec:
       containers:
         - name: manager

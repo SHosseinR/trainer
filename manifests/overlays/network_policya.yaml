@@ -1,0 +1,41 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: traininer-v2-webhook
+  namespace: kubeflow
+spec:
+  podSelector:
+    matchExpressions:
+    - key: control-plane
+      operator: In
+      values:
+      - kubeflow-trainer-v2
+
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 9443
+  policyTypes:
+  - Ingress
+
+---
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: traininer-v2-jobset-webhook
+  namespace: kubeflow
+spec:
+  podSelector:
+    matchExpressions:
+    - key: control-plane
+      operator: In
+      values:
+      - kubeflow-trainer-v2-jobset
+
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 9443
+  policyTypes:
+  - Ingress

@@ -8,3 +8,10 @@ resources:
 
 patches:
   - path: patches/remove-namespace.yaml
+  - target:
+      kind: Deployment
+      name: kubeflow-trainer-controller-manager
+    patch: |-
+      - op: add
+        path: /spec/template/metadata/labels/control-plane
+        value: kubeflow-trainer-v2

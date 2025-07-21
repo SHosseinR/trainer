@@ -12,3 +12,39 @@ patches:
       group: ""
       version: v1
       kind: Namespace
+  - target:
+      kind: Deployment
+      name: jobset-controller-manager
+    patch: |-
+      - op: add
+        path: /spec/template/metadata/annotations/sidecar.istio.io~1inject
+        value: "false"
+  - target:
+      kind: Deployment
+      name: jobset-controller-manager
+    patch: |-
+      - op: add
+        path: /spec/template/metadata/labels/control-plane
+        value: kubeflow-trainer-v2-jobset
+  - target:
+      kind: Deployment
+      name: jobset-controller-manager
+    patch: |-
+      - op: add
+        path: /spec/selector/matchLabels/control-plane
+        value: kubeflow-trainer-v2-jobset
+
+  - target:
+      kind: Service
+      name: jobset-controller-manager-metrics-service
+    patch: |-
+      - op: add
+        path: /spec/selector/control-plane
+        value: kubeflow-trainer-v2-jobset
+  - target:
+      kind: Service
+      name: jobset-webhook-service
+    patch: |-
+      - op: add
+        path: /spec/selector/control-plane
+        value: kubeflow-trainer-v2-jobset
